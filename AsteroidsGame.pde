@@ -1,8 +1,5 @@
 SpaceShip falcon;
 Star [] destroyers;
-//finish keyPressed
-//hyperspace
-//and star class
 public void setup() 
 {
   size(700,600);
@@ -172,16 +169,18 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 } 
 class Star
 {
-  private int starX, starY;
+  private int starX, starY, starColor;
   Star()
   {
     starX = ((int)(Math.random()*701));
     starY = ((int)(Math.random()*601));
+    starColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
   }
   public void show()
   {
     noStroke();
-    fill(255);
+    fill(starColor);
+    //fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
     ellipse(starX,starY,5,5);
   }
 }
@@ -197,10 +196,18 @@ public void keyPressed()
   }
   if(key == 'w') //accelerates up
   {
-    falcon.accelerate(.15);
+    falcon.accelerate(.30);
   }
   if(key == 's') //accelerate down
   {
-    falcon.accelerate(-.15);
+    falcon.accelerate(-.30);
+  }
+  if(keyCode == ENTER)
+  {
+    falcon.setX((int)(Math.random()*701));
+    falcon.setY((int)(Math.random()*601));
+    falcon.setDirectionX(0);
+    falcon.setDirectionY(0);
+    falcon.setPointDirection((int)(Math.random()*361));
   }
 }  
