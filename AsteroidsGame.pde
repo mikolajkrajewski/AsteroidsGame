@@ -1,5 +1,6 @@
 SpaceShip falcon;
 Star [] destroyers;
+Planet [] galaxy;
 public void setup() 
 {
   size(700,600);
@@ -10,6 +11,11 @@ public void setup()
   {
     destroyers[i] = new Star();
   }
+  galaxy = new Planet[20];
+  for(int i=0; i<galaxy.length; i++)
+  {
+    galaxy[i] = new Planet();
+  }
 }
 public void draw() 
 {
@@ -18,8 +24,15 @@ public void draw()
   {
     destroyers[i].show();
   }
+  for(int i=0; i<galaxy.length; i++)
+  {
+    galaxy[i].show();
+  }
+  /*if(keyPressed == true)
+  {
+    falcon.rockets();
+  }*/
   falcon.move();
-  
   falcon.show();
 }
 class SpaceShip extends Floater
@@ -73,13 +86,21 @@ class SpaceShip extends Floater
     yCorners[20] = -2;
     xCorners[21] = 14;
     yCorners[21] = -5;
-    myColor = color(0,0,255);
+    myColor = color(128,128,128);
     myCenterX = 350;
     myCenterY = 300;
     myDirectionX = 0;
     myDirectionY = 0;
     myPointDirection = 0;
   }
+  /*public void rockets()
+  {
+    noFill();
+    stroke(255);
+    strokeWeight(4);
+    arc((float)myCenterX,(float)myCenterY,40,40,PI-PI/6+(float)myPointDirection,PI+PI/6+(float)myPointDirection);
+    strokeWeight(1);
+  }*/
   public void setX(int x){myCenterX = x;} 
   public int getX(){return (int)myCenterX;}   
   public void setY(int y){myCenterY = y;} 
@@ -169,8 +190,24 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 } 
 class Star
 {
-  private int starX, starY, starColor;
-  Star()
+  protected int starX, starY, starColor;
+  public Star()
+  {
+    starX = ((int)(Math.random()*701));
+    starY = ((int)(Math.random()*601));
+    starColor = color(255,255,255);
+    //starColor = color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
+  }
+  public void show()
+  {
+    noStroke();
+    fill(starColor);
+    ellipse(starX,starY,2,2);
+  }
+}
+class Planet extends Star
+{
+  public Planet()
   {
     starX = ((int)(Math.random()*701));
     starY = ((int)(Math.random()*601));
@@ -180,19 +217,18 @@ class Star
   {
     noStroke();
     fill(starColor);
-    //fill((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
-    ellipse(starX,starY,5,5);
+    ellipse(starX,starY,20,20);
   }
 }
 public void keyPressed()
 {
   if(key == 'a')
   {
-    falcon.rotate(-30);
+    falcon.rotate(-10);
   }
   if(key == 'd')
   {
-    falcon.rotate(30);
+    falcon.rotate(10);
   }
   if(key == 'w') //accelerates up
   {
