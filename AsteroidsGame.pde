@@ -1,6 +1,7 @@
 SpaceShip falcon;
 Star [] destroyers;
 Planet [] galaxy;
+Asteroids [] rocks;
 public void setup() 
 {
   size(700,600);
@@ -15,6 +16,11 @@ public void setup()
   for(int i=0; i<galaxy.length; i++)
   {
     galaxy[i] = new Planet();
+  }
+  rocks = new Asteroids[12];
+  for(int i=0; i<rocks.length; i++)
+  {
+    rocks[i] = new Asteroids();
   }
 }
 public void draw() 
@@ -34,6 +40,11 @@ public void draw()
   }*/
   falcon.move();
   falcon.show();
+  for(int i=0; i<rocks.length; i++)
+  {
+    rocks[i].move();
+    rocks[i].show();
+  }
 }
 class SpaceShip extends Floater
 {   
@@ -191,7 +202,7 @@ abstract class Floater //Do NOT modify the Floater class! Make changes in the Sp
 class Star
 {
   protected int starX, starY, starColor;
-  public Star()
+  Star()
   {
     starX = ((int)(Math.random()*701));
     starY = ((int)(Math.random()*601));
@@ -207,7 +218,7 @@ class Star
 }
 class Planet extends Star
 {
-  public Planet()
+  Planet()
   {
     starX = ((int)(Math.random()*701));
     starY = ((int)(Math.random()*601));
@@ -247,3 +258,118 @@ public void keyPressed()
     falcon.setPointDirection((int)(Math.random()*361));
   }
 }  
+class Asteroids extends Floater
+{
+  private int rockType;
+  private int rotSpeed;
+  private int factor;
+  Asteroids()
+  {
+    rockType = ((int)(Math.random()*2));
+    factor = 2;
+    noStroke();
+    if(rockType == 0)
+    {
+      corners = 19;
+      xCorners = new int[corners];
+      yCorners = new int[corners];
+      xCorners[0] = 1*factor;
+      yCorners[0] = 10*factor;
+      xCorners[1] = 2*factor;
+      yCorners[1] = 12*factor;
+      xCorners[2] = 6*factor;
+      yCorners[2] = 8*factor;
+      xCorners[3] = 7*factor;
+      yCorners[3] = 6*factor;
+      xCorners[4] = 10*factor;
+      yCorners[4] = 4*factor;
+      xCorners[5] = 13*factor;
+      yCorners[5] = -1*factor;
+      xCorners[6] = 14*factor;
+      yCorners[6] = -5*factor;
+      xCorners[7] = 10*factor;
+      yCorners[7] = -12*factor;
+      xCorners[8] = 5*factor;
+      yCorners[8] = -12*factor;
+      xCorners[9] = 2*factor;
+      yCorners[9] = -15*factor;
+      xCorners[10] = -4*factor;
+      yCorners[10] = -13*factor;
+      xCorners[11] = -9*factor;
+      yCorners[11] = -14*factor;
+      xCorners[12] = -13*factor;
+      yCorners[12] = -12*factor;
+      xCorners[13] = -15*factor;
+      yCorners[13] = -6*factor;
+      xCorners[14] = -14*factor;
+      yCorners[14] = -1*factor;
+      xCorners[15] = -12*factor;
+      yCorners[15] = 2*factor;
+      xCorners[16] = -13*factor;
+      yCorners[16] = 5*factor;
+      xCorners[17] = -7*factor;
+      yCorners[17] = 11*factor;
+      xCorners[18] = -3*factor;
+      yCorners[18] = 8*factor;
+      myColor = color(160,82,45);
+      myCenterX = (int)(Math.random()*701);
+      myCenterY = (int)(Math.random()*601);
+      rotSpeed = (int)((Math.random()*7)-3);
+    }
+    else if(rockType == 1)
+    {
+      corners = 14;
+      xCorners = new int[corners];
+      yCorners = new int[corners];
+      xCorners[0] = 3*factor;
+      yCorners[0] = 8*factor;
+      xCorners[1] = 6*factor;
+      yCorners[1] = 4*factor;
+      xCorners[2] = 10*factor;
+      yCorners[2] = 1*factor;
+      xCorners[3] = 10*factor;
+      yCorners[3] = -3*factor;
+      xCorners[4] = 8*factor;
+      yCorners[4] = -9*factor;
+      xCorners[5] = 4*factor;
+      yCorners[5] = -10*factor;
+      xCorners[6] = 0*factor;
+      yCorners[6] = -12*factor;
+      xCorners[7] = -5*factor;
+      yCorners[7] = -10*factor;
+      xCorners[8] = -9*factor;
+      yCorners[8] = -6*factor;
+      xCorners[9] = -11*factor;
+      yCorners[9] = -1*factor;
+      xCorners[10] = -9*factor;
+      yCorners[10] = 1*factor;
+      xCorners[11] = -11*factor;
+      yCorners[11] = 4*factor;
+      xCorners[12] = -7*factor;
+      yCorners[12] = 8*factor;
+      xCorners[13] = -3*factor;
+      yCorners[13] = 10*factor;
+      myColor = color(112,138,144);
+      myCenterX = (int)(Math.random()*701);
+      myCenterY = (int)(Math.random()*601);
+      rotSpeed = (int)((Math.random()*7)-3);
+    }
+  }
+  public void move()
+  {
+    rotate(rotSpeed);
+    super.move();
+    myCenterX += Math.cos(rotSpeed);
+    myCenterY += Math.sin(rotSpeed);
+  }
+  public void setX(int x){myCenterX = x;} 
+  public int getX(){return (int)myCenterX;}   
+  public void setY(int y){myCenterY = y;} 
+  public int getY(){return (int)myCenterY;}   
+  public void setDirectionX(double x){myDirectionX = x;}   
+  public double getDirectionX(){return myDirectionX;}
+  public void setDirectionY(double y){myDirectionY = y;}
+  public double getDirectionY(){return myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}
+  public double getPointDirection(){return myPointDirection;} 
+}
