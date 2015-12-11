@@ -1,6 +1,7 @@
 SpaceShip falcon;
 Star [] destroyers;
 Planet [] galaxy;
+ArrayList <Asteroids> field = new ArrayList<Asteroids>();
 Asteroids [] rocks;
 public void setup() 
 {
@@ -17,10 +18,9 @@ public void setup()
   {
     galaxy[i] = new Planet();
   }
-  rocks = new Asteroids[12];
-  for(int i=0; i<rocks.length; i++)
+  for(int a=0; a<(int)(Math.random()*10)+10; a++)
   {
-    rocks[i] = new Asteroids();
+    field.add(new Asteroids());
   }
 }
 public void draw() 
@@ -40,10 +40,14 @@ public void draw()
   }*/
   falcon.move();
   falcon.show();
-  for(int i=0; i<rocks.length; i++)
+  for(int a=0; a<field.size(); a++)
   {
-    rocks[i].move();
-    rocks[i].show();
+    field.get(a).move();
+    field.get(a).show();
+    if(dist(falcon.getX(),falcon.getY(),field.get(a).getX(),field.get(a).getY()) < 40)
+    {
+      field.remove(a);
+    }
   }
 }
 class SpaceShip extends Floater
